@@ -10,6 +10,4 @@ public interface StudentService {
     List<Student> getAllStudents();
 
     Student getStudent(String userId);
-
-
 }
