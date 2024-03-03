@@ -53,7 +53,12 @@ public class StudentServiceImpl implements StudentService {
         Student student=studentRepository.getByUserId(userId);
 
         //get the marks of the student through API of marksService
-        Marks[] marksOfUser = restTemplate.getForObject("http://localhost:8082/marks/student/"+student.getUserId(), Marks[].class);
+        //Earlier we were calling the microservices using its url and port , but what if in future the port is changed
+        // so in that case you again have to come here and change the port. So to avoid this we use the name of the
+        // microservice instead of its url and port.This name you will get from the service registry open service
+        // registry in web browser, there you will see number of microservices which are active with their name, port,
+        // url etc.
+        Marks[] marksOfUser = restTemplate.getForObject("http://MARKS/marks/student/"+student.getUserId(), Marks[].class);
         logger.info("{} ",marksOfUser);
 
         List<Marks> marksl=Arrays.stream(marksOfUser).toList();
@@ -61,7 +66,7 @@ public class StudentServiceImpl implements StudentService {
         List<Marks> marksList= marksl.stream().map(marks -> {
 
             //api call to exam service to get the subject
-            ResponseEntity<Subject> forEntity=restTemplate.getForEntity("http://localhost:8081/subject/"+marks.getSubjectId(), Subject.class);
+            ResponseEntity<Subject> forEntity=restTemplate.getForEntity("http://EXAM/subject/"+marks.getSubjectId(), Subject.class);
             Subject subject=forEntity.getBody();
             logger.info("response status code: {}",forEntity.getStatusCode());
 
