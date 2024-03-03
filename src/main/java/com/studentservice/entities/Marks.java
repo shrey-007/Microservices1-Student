@@ -14,4 +14,6 @@ public class Marks {
     private String subjectId;
     private  int mark;
     private char grade;
+
+    private Subject subject;
 }
