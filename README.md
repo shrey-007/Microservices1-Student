@@ -1,0 +1,1 @@
+Since this microservice id calling other two services that's why we are implementing circuit breaker here.
